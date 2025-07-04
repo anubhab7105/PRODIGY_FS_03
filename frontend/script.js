@@ -88,14 +88,6 @@ const products = [
         price: 350,
         image: "https://images.unsplash.com/photo-1627834377411-8da5f4f09de8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
         category: "bakery"
-    },
-    {
-        id: 9,
-        name: "Strawberries",
-        description: "Sweet and juicy strawberries",//work Needed
-        price: 150,
-        image: "https://sl.bing.net/ddWtIEY7uHQ",
-        category: "fruits"
     }
 ];
 
