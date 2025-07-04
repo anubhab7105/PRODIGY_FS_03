@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "Apples",
+    "description": "Crisp and juicy organic apples from local farms",
+    "price": 120,
+    "image": "apples.jpg",
+    "category": "fruits"
+  },
+  {
+    "id": 2,
+    "name": "Tomatoes",
+    "description": "Fresh vine-ripened tomatoes",
+    "price": 80,
+    "image": "tomatoes.jpg",
+    "category": "vegetables"
+  },
+  {
+    "id": 3,
+    "name": "Milk",
+    "description": "Pure milk from grass-fed cows",
+    "price": 55,
+    "image": "milk.jpg",
+    "category": "dairy"
+  },
+  {
+    "id": 4,
+    "name": "Bread",
+    "description": "Freshly baked whole wheat bread",
+    "price": 45,
+    "image": "bread.jpg",
+    "category": "bakery"
+  },
+  {
+    "id": 5,
+    "name": "Bananas",
+    "description": "Bananas",
+    "price": 60,
+    "image": "bananas.jpg",
+    "category": "fruits"
+  },
+  {
+    "id": 6,
+    "name": "Carrots",
+    "description": "Sweet and crunchy carrots",
+    "price": 40,
+    "image": "carrots.jpg",
+    "category": "vegetables"
+  },
+  {
+    "id": 7,
+    "name": "Eggs",
+    "description": "Farm fresh eggs from free-range chickens",
+    "price": 90,
+    "image": "eggs.jpg",
+    "category": "dairy"
+  },
+  {
+    "id": 8,
+    "name": "Cake",
+    "description": "Sweet and tasty cake",
+    "price": 35,
+    "image": "croissants.jpg",
+    "category": "bakery"
+  },
+  {
+    "id": 9,
+    "name": "Strawberries",
+    "description": "Sweet and juicy strawberries",
+    "price": 150,
+    "image": "strawberries.jpg",
+    "category": "fruits"
+  }
+]
