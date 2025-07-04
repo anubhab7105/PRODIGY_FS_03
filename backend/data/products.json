@@ -62,13 +62,5 @@
     "price": 35,
     "image": "croissants.jpg",
     "category": "bakery"
-  },
-  {
-    "id": 9,
-    "name": "Strawberries",
-    "description": "Sweet and juicy strawberries",
-    "price": 150,
-    "image": "strawberries.jpg",
-    "category": "fruits"
   }
 ]
