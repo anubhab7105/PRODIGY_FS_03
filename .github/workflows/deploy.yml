@@ -1,13 +1,43 @@
-name: Deploy
-on: [push]
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [main]
+
+# PERMISSIONS FIX - THIS IS CRITICAL
+permissions:
+  contents: read
+  pages: write
+  id-token: write  # Required for authentication
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v4
-      - uses: actions/upload-pages-artifact@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Add build steps here if needed (npm install, build commands, etc)
+      # - name: Build
+      #   run: |
+      #     cd frontend
+      #     npm install
+      #     npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3  # NOTE: v3 instead of v2
         with:
-          path: 'frontend/'   
-      - name: Deploy
-        uses: actions/deploy-pages@v4
+          path: 'frontend/'  # Your frontend directory
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2  # More stable version
+        # Or use v4 with explicit token if needed:
+        # uses: actions/deploy-pages@v4
+        # with:
+        #   token: ${{ secrets.GITHUB_TOKEN }}
