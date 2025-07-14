@@ -453,3 +453,9 @@ export default function handler(req, res) {
   console.log("Received data:", req.body);
   res.status(200).json({ success: true });
 }
+
+export default function handler(req, res) {
+  console.log("📦 ORDER RECEIVED", JSON.stringify(req.body, null, 2));
+
+  res.status(200).json({ status: "Order placed" });
+}
