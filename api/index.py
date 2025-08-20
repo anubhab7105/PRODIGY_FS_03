@@ -78,24 +78,5 @@ def get_order(order_id):
 def get_all_orders():
     return jsonify(orders)
 
-# Vercel serverless function handler
-def handler(request):
-    # This function will be called by Vercel's serverless environment
-    from flask import Request, Response
-    import json
-    
-    # Convert Vercel request to Flask request
-    with app.request_context(request):
-        try:
-            # Dispatch the request
-            response = app.full_dispatch_request()
-            return {
-                'statusCode': response.status_code,
-                'headers': dict(response.headers),
-                'body': response.get_data(as_text=True)
-            }
-        except Exception as e:
-            return {
-                'statusCode': 500,
-                'body': json.dumps({'error': str(e)})
-            }
+if __name__ == '__main__':
+    app.run(debug=True)
