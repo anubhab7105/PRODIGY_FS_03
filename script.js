@@ -23,80 +23,15 @@ const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 const languageSelector = document.getElementById('languageSelector');
 
-// Product Data
-const products = [
-    {
-        id: 1,
-        name: "Fresh Apples",
-        description: "Crisp and juicy organic apples from local farms. Perfect for snacks or baking.",
-        price: 120,
-        image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        category: "fruits"
-    },
-    {
-        id: 2,
-        name: "Organic Tomatoes",
-        description: "Fresh vine-ripened tomatoes, perfect for salads and sauces.",
-        price: 80,
-        image: "https://images.unsplash.com/photo-1561136594-7f68413baa99?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        category: "vegetables"
-    },
-    {
-        id: 3,
-        name: "Farm Fresh Milk",
-        description: "Pure, unadulterated milk from grass-fed cows. Pasteurized for safety.",
-        price: 55,
-        image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        category: "dairy"
-    },
-    {
-        id: 4,
-        name: "Whole Wheat Bread",
-        description: "Freshly baked whole wheat bread with no preservatives. Great for sandwiches.",
-        price: 45,
-        image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        category: "bakery"
-    },
-    {
-        id: 5,
-        name: "Bananas",
-        description: "Naturally ripened bananas, rich in potassium and energy.",
-        price: 60,
-        image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        category: "fruits"
-    },
-    {
-        id: 6,
-        name: "Carrots",
-        description: "Sweet and crunchy carrots, packed with vitamins and antioxidants.",
-        price: 40,
-        image: "https://images.unsplash.com/photo-1445282768818-728615cc910a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        category: "vegetables"
-    },
-    {
-        id: 7,
-        name: "Eggs",
-        description: "10 Farm fresh eggs from free-range chickens. Rich in protein and nutrients.",
-        price: 90,
-        image: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        category: "dairy"
-    },
-    {
-        id: 8,
-        name: "Cake",
-        description: "Buttery, baked fresh daily. Perfect for birthdays.",
-        price: 350,
-        image: "https://images.unsplash.com/photo-1627834377411-8da5f4f09de8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-        category: "bakery"
-    }
-];
+// Product Data (will be fetched from API)
+let products = [];
 
 // Cart State
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', () => {
-    renderProducts();
+    fetchProducts();
     updateCartUI();
     
     // Event Listeners
@@ -139,6 +74,85 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Fetch products from API
+async function fetchProducts() {
+    try {
+        const response = await fetch('/api/products');
+        products = await response.json();
+        renderProducts();
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        // Fallback to sample products if API fails
+        products = [
+            {
+                id: 1,
+                name: "Fresh Apples",
+                description: "Crisp and juicy organic apples from local farms. Perfect for snacks or baking.",
+                price: 120,
+                image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                category: "fruits"
+            },
+            {
+                id: 2,
+                name: "Organic Tomatoes",
+                description: "Fresh vine-ripened tomatoes, perfect for salads and sauces.",
+                price: 80,
+                image: "https://images.unsplash.com/photo-1561136594-7f68413baa99?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                category: "vegetables"
+            },
+            {
+                id: 3,
+                name: "Farm Fresh Milk",
+                description: "Pure, unadulterated milk from grass-fed cows. Pasteurized for safety.",
+                price: 55,
+                image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                category: "dairy"
+            },
+            {
+                id: 4,
+                name: "Whole Wheat Bread",
+                description: "Freshly baked whole wheat bread with no preservatives. Great for sandwiches.",
+                price: 45,
+                image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                category: "bakery"
+            },
+            {
+                id: 5,
+                name: "Bananas",
+                description: "Naturally ripened bananas, rich in potassium and energy.",
+                price: 60,
+                image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                category: "fruits"
+            },
+            {
+                id: 6,
+                name: "Carrots",
+                description: "Sweet and crunchy carrots, packed with vitamins and antioxidants.",
+                price: 40,
+                image: "https://images.unsplash.com/photo-1445282768818-728615cc910a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                category: "vegetables"
+            },
+            {
+                id: 7,
+                name: "Eggs",
+                description: "10 Farm fresh eggs from free-range chickens. Rich in protein and nutrients.",
+                price: 90,
+                image: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                category: "dairy"
+            },
+            {
+                id: 8,
+                name: "Cake",
+                description: "Buttery, baked fresh daily. Perfect for birthdays.",
+                price: 350,
+                image: "https://images.unsplash.com/photo-1627834377411-8da5f4f09de8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                category: "bakery"
+            }
+        ];
+        renderProducts();
+    }
+}
+
 // Toggle Mobile Menu
 function toggleMobileMenu() {
     mobileMenu.style.display = mobileMenu.style.display === 'block' ? 'none' : 'block';
@@ -160,7 +174,7 @@ function renderProducts(category = 'all') {
             <div class="product-info">
                 <h3 class="product-title">${product.name}</h3>
                 <p class="product-description">${product.description}</p>
-                <div class="product-price">${product.price}</div>
+                <div class="product-price">₹${product.price}</div>
                 <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
             </div>
         `;
@@ -237,7 +251,7 @@ function updateCartUI() {
             <div class="cart-item-img" style="background-image: url(${item.image})"></div>
             <div class="cart-item-info">
                 <div class="cart-item-title">${item.name}</div>
-                <div class="cart-item-price">${item.price}</div>
+                <div class="cart-item-price">₹${item.price}</div>
                 <div class="cart-item-actions">
                     <button class="quantity-btn minus" data-id="${item.id}">-</button>
                     <span class="quantity">${item.quantity}</span>
@@ -348,7 +362,7 @@ function closeAllModals() {
 }
 
 // Process Payment
-function processPayment(e) {
+async function processPayment(e) {
     e.preventDefault();
     
     // Get form data
@@ -363,80 +377,117 @@ function processPayment(e) {
         upiId: document.getElementById('upiId')?.value || null
     };
     
-    // Simulate payment processing
-    setTimeout(() => {
-        // Clear cart
-        cart = [];
-        localStorage.setItem('cart', JSON.stringify(cart));
+    try {
+        // Send order to backend
+        const response = await fetch('/api/cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                cart: cart,
+                user_info: formData
+            })
+        });
         
-        // Close modals
-        closeAllModals();
+        const result = await response.json();
         
-        // Show success message
-        showToast('Order placed successfully!');
-        
-        // Reset form
-        paymentForm.reset();
-        
-        // Update UI
-        updateCartUI();
-    }, 1500);
+        if (response.ok) {
+            // Clear cart
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Close modals
+            closeAllModals();
+            
+            // Show success message
+            showToast(`Order placed successfully! Order ID: ${result.order_id}`);
+            
+            // Reset form
+            paymentForm.reset();
+            
+            // Update UI
+            updateCartUI();
+        } else {
+            showToast('Error placing order. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error processing payment:', error);
+        showToast('Error placing order. Please try again.');
+    }
 }
 
 // Track Order
-function trackOrder() {
+async function trackOrder() {
     const orderId = orderIdInput.value.trim();
     if (!orderId) {
         showToast('Please enter an order ID');
         return;
     }
     
-    // Simulate order tracking
-    trackingResults.innerHTML = `
-        <div class="tracking-steps">
-            <div class="tracking-step step-completed">
-                <div class="step-icon"><i class="fas fa-check"></i></div>
-                <div class="step-text">Order Placed</div>
-            </div>
-            <div class="tracking-step step-completed">
-                <div class="step-icon"><i class="fas fa-check"></i></div>
-                <div class="step-text">Processing</div>
-            </div>
-            <div class="tracking-step step-active">
-                <div class="step-icon"><i class="fas fa-truck"></i></div>
-                <div class="step-text">On the Way</div>
-            </div>
-            <div class="tracking-step">
-                <div class="step-icon"><i class="fas fa-home"></i></div>
-                <div class="step-text">Delivered</div>
-            </div>
-        </div>
+    try {
+        const response = await fetch(`/api/orders/${orderId}`);
+        const order = await response.json();
         
-        <div class="order-details">
-            <div class="order-card">
-                <h3>Order Information</h3>
-                <p><strong>Order ID:</strong> FRM-${orderId}</p>
-                <p><strong>Order Date:</strong> ${new Date().toLocaleDateString()}</p>
-                <p><strong>Estimated Delivery:</strong> Today, 3:00 PM - 4:00 PM</p>
+        if (response.ok) {
+            // Display order details
+            trackingResults.innerHTML = `
+                <div class="tracking-steps">
+                    <div class="tracking-step ${order.status !== 'Processing' ? 'step-completed' : 'step-active'}">
+                        <div class="step-icon"><i class="fas ${order.status !== 'Processing' ? 'fa-check' : 'fa-truck'}"></i></div>
+                        <div class="step-text">Order Placed</div>
+                    </div>
+                    <div class="tracking-step ${order.status === 'Processing' ? 'step-active' : 'step-completed'}">
+                        <div class="step-icon"><i class="fas ${order.status === 'Processing' ? 'fa-truck' : 'fa-check'}"></i></div>
+                        <div class="step-text">Processing</div>
+                    </div>
+                    <div class="tracking-step">
+                        <div class="step-icon"><i class="fas fa-home"></i></div>
+                        <div class="step-text">Delivered</div>
+                    </div>
+                </div>
+                
+                <div class="order-details">
+                    <div class="order-card">
+                        <h3>Order Information</h3>
+                        <p><strong>Order ID:</strong> ${order.id}</p>
+                        <p><strong>Order Date:</strong> ${order.date}</p>
+                        <p><strong>Status:</strong> ${order.status}</p>
+                    </div>
+                    
+                    <div class="order-card">
+                        <h3>Delivery Address</h3>
+                        <p>${order.user_info.address}</p>
+                        <p>${order.user_info.city}, ${order.user_info.zip}</p>
+                    </div>
+                    
+                    <div class="order-card">
+                        <h3>Order Summary</h3>
+                        <p><strong>Items:</strong> ${order.items.reduce((total, item) => total + item.quantity, 0)}</p>
+                        <p><strong>Total:</strong> ₹${order.total}</p>
+                    </div>
+                </div>
+            `;
+        } else {
+            trackingResults.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>Order not found. Please check your order ID.</p>
+                </div>
+            `;
+        }
+        
+        trackingResults.style.display = 'block';
+    } catch (error) {
+        console.error('Error tracking order:', error);
+        trackingResults.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Error tracking order. Please try again.</p>
             </div>
-            
-            <div class="order-card">
-                <h3>Delivery Address</h3>
-                <p>123 Main Street, Apt 4B</p>
-                <p>Mumbai, Maharashtra 400001</p>
-            </div>
-            
-            <div class="order-card">
-                <h3>Order Summary</h3>
-                <p><strong>Items:</strong> 5</p>
-                <p><strong>Subtotal:</strong> ₹875</p>
-                <p><strong>Delivery:</strong> FREE</p>
-                <p><strong>Total:</strong> ₹875</p>
-            </div>
-        </div>
-    `;
-    
-    trackingResults.style.display = 'block';
+        `;
+        trackingResults.style.display = 'block';
+    }
 }
 
 // Show Toast Notification
@@ -447,15 +498,4 @@ function showToast(message) {
     setTimeout(() => {
         toast.classList.remove('show');
     }, 3000);
-}
-
-export default function handler(req, res) {
-  console.log("Received data:", req.body);
-  res.status(200).json({ success: true });
-}
-
-export default function handler(req, res) {
-  console.log("📦 ORDER RECEIVED", JSON.stringify(req.body, null, 2));
-
-  res.status(200).json({ status: "Order placed" });
 }
